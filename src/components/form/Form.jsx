@@ -1,15 +1,12 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import css from './formStyle.module.css';
 
 export const Form = ({ onCheck }) => {
-  const [id, setId] = useState(null);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const user = {
-    id,
     name,
     number,
   };
@@ -17,7 +14,6 @@ export const Form = ({ onCheck }) => {
   const handleSabmit = e => {
     e.preventDefault();
     onCheck(user);
-    setId(null);
     setName('');
     setNumber('');
   };
@@ -34,7 +30,6 @@ export const Form = ({ onCheck }) => {
       default:
         return;
     }
-    setId(nanoid());
   };
 
   return (

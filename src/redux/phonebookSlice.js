@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 const phonebookSlice = createSlice({
-  name: '@@ContactList',
+  name: '@@contacts',
   initialState: {
     contacts: [],
     filter: '',
@@ -38,5 +38,5 @@ const phonebookSlice = createSlice({
 });
 
 export const phonebookReducer = phonebookSlice.reducer;
-export const { addContact, removeContacts, changeFilter } =
+export const { addContact, removeContact, changeFilter } =
   phonebookSlice.actions;

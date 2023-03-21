@@ -1,20 +1,37 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addContact,
+  removeContact,
+  changeFilter,
+} from '../redux/phonebookSlice';
 import { List } from 'components/list/List';
 import { Form } from 'components/form/Form';
 import { Filter } from 'components/filter/Filter';
+
 import styled from 'styled-components';
 
-const CONTACTS_KEY = 'contacts';
+// const CONTACTS_KEY = 'contacts';
+
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  const { filter, contacts } = useSelector(state => state.contacts);
+  // const state = useSelector(state => state);
+  console.log(filter);
+  const dispatch = useDispatch();
+
+  // const [contacts, setContacts] = useState([]);
+  // const [filter, setFilter] = useState('');
 
   const handleSubmit = contact => {
-    setContacts(prevState => [...prevState, contact]);
+    dispatch(addContact(contact));
+  };
+
+  const handleDeleteUser = id => {
+    dispatch(removeContact(id));
   };
 
   const onChangeSearch = e => {
-    setFilter(e.target.value);
+    dispatch(changeFilter(e.target.value));
   };
 
   const applayFilter = () => {
@@ -35,20 +52,16 @@ export const App = () => {
     }
   };
 
-  const handleDeleteUser = id => {
-    setContacts(prevState => prevState.filter(user => user.id !== id));
-  };
+  // useEffect(() => {
+  //   const contacts = localStorage.getItem(CONTACTS_KEY);
+  //   if (contacts && JSON.parse(contacts).length) {
+  //     setContacts(JSON.parse(contacts));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const contacts = localStorage.getItem(CONTACTS_KEY);
-    if (contacts && JSON.parse(contacts).length) {
-      setContacts(JSON.parse(contacts));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts));
+  // }, [contacts]);
 
   return (
     <Wraper>

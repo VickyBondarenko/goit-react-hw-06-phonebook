@@ -5,6 +5,7 @@ export const List = ({ options, onDeleteUser }) => {
   function handleDelete(e) {
     onDeleteUser(e.target.id);
   }
+
   return (
     <ul className={css.list}>
       {options.map(({ id, name, number }) => (
