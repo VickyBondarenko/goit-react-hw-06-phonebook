@@ -1,20 +1,24 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter } from '../../redux/phonebookSlice';
 
-export const Filter = ({ value, onChangeSearch }) => {
+export const Filter = () => {
+  const { filter } = useSelector(state => state.contacts);
+
+  const dispatch = useDispatch();
+
+  const onChangeSearch = e => {
+    dispatch(changeFilter(e.target.value));
+  };
+
   return (
     <div className="filter">
       <p>Find contacts by name</p>
       <input
         type="text"
         placeholder="Type to search ..."
-        value={value}
+        value={filter}
         onChange={onChangeSearch}
       />
     </div>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChangeSearch: PropTypes.func.isRequired,
 };

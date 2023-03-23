@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/phonebookSlice';
 import css from './formStyle.module.css';
 
-export const Form = ({ onCheck }) => {
+export const Form = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -11,9 +12,24 @@ export const Form = ({ onCheck }) => {
     number,
   };
 
+  const { contacts } = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+
+  const handleCheck = data => {
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === data.name.toLowerCase()
+      )
+    ) {
+      alert(`${data.name} is alredy in contact`);
+    } else {
+      dispatch(addContact(data));
+    }
+  };
+
   const handleSabmit = e => {
     e.preventDefault();
-    onCheck(user);
+    handleCheck(user);
     setName('');
     setNumber('');
   };
@@ -70,8 +86,4 @@ export const Form = ({ onCheck }) => {
       </button>
     </form>
   );
-};
-
-Form.propTypes = {
-  onCheck: PropTypes.func.isRequired,
 };
